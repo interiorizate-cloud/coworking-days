@@ -55,6 +55,6 @@ function refreshOnReturn(){if(token&&!busy)run(refresh);}
 window.addEventListener('pageshow',e=>{if(e.persisted)refreshOnReturn();});
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')refreshOnReturn();});
 message('Escolhe o espaço de cowork para começar.');
-try{token=localStorage.getItem(storageKey)||'';}catch(e){}controls();if(token)run(async()=>{showAccount('participante');try{await finishLogin();}catch(e){if(e.communication){message('O teu acesso está guardado. Não foi possível consultar a presença. Atualiza a página para tentar novamente.');return;}token='';state=null;try{localStorage.removeItem(storageKey);}catch(x){}el('panel').hidden=true;el('join').hidden=false;message(e.message+' Recupera o acesso com o email do teu registo.');}});
+try{token=localStorage.getItem(storageKey)||'';}catch(e){}controls();if(token)run(async()=>{showAccount('participante');try{await refresh();}catch(e){if(e.communication){message('O teu acesso está guardado. Não foi possível consultar a presença. Atualiza a página para tentar novamente.');return;}token='';state=null;try{localStorage.removeItem(storageKey);}catch(x){}el('panel').hidden=true;el('join').hidden=false;message(e.message+' Recupera o acesso com o email do teu registo.');return;}message('Dispositivo reconhecido. Escolhe o espaço para registar a tua presença.');await handleAction();});
 })().catch(e=>{document.getElementById('msg').textContent=e.message||'Não foi possível iniciar a aplicação.';});
 </script></body></html>
